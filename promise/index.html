@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="example">
+<head>
+    <meta charset="UTF-8">
+    <title>Promise</title>
+    <script type="text/javascript" src="../node_modules/angular/angular.js"></script>
+    <script type="text/javascript">
+        angular
+            .module("example", [])
+            .controller("ctrl", function($q){
+
+                var recupTodo = function(id){
+                    var defer = $q.defer(); //représente le traitement/l'objet en attente
+
+                    setTimeout(function(){
+                        console.log("2 secs : " + id);
+                        if(id > 0)
+                            defer.resolve({ id: id});
+                        else
+                            defer.reject("erreur");
+                    }, id*1000);
+
+                    return defer.promise;
+                };
+
+                //var todo = recupTodo(1);
+
+                /*todo.then(
+                    function(todo){ //success
+                        console.log("yahoo");
+                        console.dir(todo);
+                    }, function(e){ //erreur
+                        console.log(e);
+                    }
+                );*/
+
+                /*todo.then(function(todo){
+                    console.log("recup todo 1");
+                    return recupTodo(2);
+                    console.log(todo);
+                }).then(function(todo){
+                    console.log(todo);
+                });*/
+
+                var p1 = recupTodo(1);
+                var p2 = recupTodo(5);
+                var p3 = recupTodo(2);
+
+                $q.all([p1, p2, p3]).then(function(data){
+                    console.dir(data);
+                });
+
+            });
+
+    </script>
+</head>
+<body ng-controller="ctrl">
+
+Test sur les promises, voir console
+</body>
+</html>

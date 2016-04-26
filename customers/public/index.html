@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html ng-app="customer.Customers">
+<head>
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css" />
+  <script type="text/javascript" src="node_modules/angular/angular.js"></script>
+  <script type="text/javascript" src="node_modules/angular-route/angular-route.js"></script>
+  <script type="text/javascript" src="node_modules/angular-resource/angular-resource.js"></script>
+  <script type="text/javascript" src="js/customers.js"></script>
+  <script type="text/javascript" src="js/customersSrv.js"></script>
+
+  <style>
+    input.ng-valid{
+      background-color: lightgreen;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container" ng-controller="CustomersCtrl as customers">
+  <div class="row">
+    <div class="col-md-offset-4 col-md-4">
+      <form novalidate ng-submit="customers.submitCust(cust)" name="custForm">
+        <input type="text" class="form-control" placeholder="name" ng-model="cust.firstname" required />
+        <input type="text" class="form-control" placeholder="firstname" ng-model="cust.name" required />
+        <input type="submit" ng-disabled="custForm.$invalid" class="btn btn-primary btn-block" value="Ajouter"  />
+      </form>
+      <pre ng-show="custForm.$invalid">
+        pristine : {{custForm.$pristine}}
+        dirty : {{custForm.$dirty}}
+        valid : {{custForm.$valid}}
+        invalid : {{custForm.$invalid}}
+      </pre>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table">
+        <tr ng-repeat="customer in customers.list">
+          <td>{{customer.id}}</td>
+          <td>{{customer.name}}</td>
+          <td>{{customer.firstname}}</td>
+          <td><button class="btn btn-danger" ng-click="customers.doDelete(customer)">Delete</button></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
+</body>
+</html>
